@@ -1,0 +1,28 @@
+invoiceCREATE TABLE `invoice` (
+    `invoice_id` INT(11) NOT NULL,  -- Foreign key to invoicemaster table
+    `item_id` INT(11) NOT NULL,     -- Foreign key to itemmaster table
+    `quantity` INT(11) NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `total_price` DECIMAL(10, 2) NOT NULL,
+    -- Foreign key constraint to invoicemaster table
+    CONSTRAINT `fk_invoice_id` FOREIGN KEY (`invoice_id`) REFERENCES `invoicemaster` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    -- Foreign key constraint to itemmaster table
+    CONSTRAINT `fk_item_id` FOREIGN KEY (`item_id`) REFERENCES `itemmaster` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB;
+
+CREATE TABLE `invoicemaster` (
+    `invoice_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `invoice_no` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `client_id` INT(11) NOT NULL,  -- Foreign key to clientmaster table
+    `invoice_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `total_amount` DECIMAL(10, 2) NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`invoice_id`) USING BTREE,
+    -- Foreign key constraint to clientmaster table
+    CONSTRAINT `fk_client_id` FOREIGN KEY (`client_id`) REFERENCES `clientmaster` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
